@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 const flash = require("connect-flash");
 const session = require("express-session");
 const app = express();
+const passport = require("passport");
+
+//passport config
+require("./config/passport")(passport);
 
 // db config
 
@@ -31,14 +35,20 @@ app.use(
   })
 );
 
+//passport middlewate
+app.use(passport.initialize());
+app.use(passport.session());
+
 //connect flash middleware
 app.use(flash());
 
 //Global vars
 
 app.use((req, res, next) => {
-  res.locals.success_msg = req.flash("success msg");
-  res.locals.error_msg = req.flash("error msg");
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  next();
 });
 
 //Routes
