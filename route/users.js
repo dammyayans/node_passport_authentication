@@ -65,7 +65,8 @@ router.post("/register", (req, res) => {
             newUser
               .save()
               .then(user => {
-                res.redirect("/user/login");
+                res.redirect("/users/login");
+                // console.log(res.body);
               })
               .catch(err => console.log(err));
           })
